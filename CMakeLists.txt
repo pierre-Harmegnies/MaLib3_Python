@@ -20,10 +20,24 @@ add_custom_command(
 
 # 3. Creation de la lib (SHARED)
 add_library(MaLib3 SHARED ${GEN_DIR}/unite.cpp src/lib3.cpp)
-target_include_directories(MaLib3 PUBLIC include)
+target_include_directories(MaLib3 PUBLIC 
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+)
 
-# On linke la Lib1 (indispensable si utilisee en interne)
-target_link_libraries(MaLib3 PRIVATE MaLib1)
+# On linke la Lib1
+target_link_libraries(MaLib3 PRIVATE MaLib1::MaLib1)
 
-install(TARGETS MaLib3 DESTINATION lib)
+install(TARGETS MaLib3 
+    EXPORT MaLib3Targets
+    DESTINATION lib
+    INCLUDES DESTINATION include
+)
+
 install(FILES include/lib3.h DESTINATION include)
+
+install(EXPORT MaLib3Targets
+    FILE MaLib3Config.cmake
+    NAMESPACE MaLib3::
+    DESTINATION lib/cmake/MaLib3
+)
