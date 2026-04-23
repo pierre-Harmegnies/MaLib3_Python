@@ -26,7 +26,7 @@ target_include_directories(MaLib3 PUBLIC
 )
 
 # On linke la Lib1
-target_link_libraries(MaLib3 PRIVATE MaLib1::MaLib1)
+target_link_libraries(MaLib3 PRIVATE MaLib1)
 
 install(TARGETS MaLib3 
     EXPORT MaLib3Targets
@@ -37,7 +37,6 @@ install(TARGETS MaLib3
 install(FILES include/lib3.h DESTINATION include)
 
 install(EXPORT MaLib3Targets
-    FILE MaLib3Config.cmake
-    NAMESPACE MaLib3::
-    DESTINATION lib/cmake/MaLib3
+    FILE MaLib3_PythonConfig.cmake
+    DESTINATION lib/cmake/MaLib3_Python
 )
